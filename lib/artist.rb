@@ -30,13 +30,15 @@ class Artist
         if  self.all.select {|artists| artists.name != name}
             name = Artist.new(name)
         else
-            name
+            artists.name
             #self.all.select {|artists| artists.name == name}
         end
     end #search through all Artists for matching names
     #if that search is nil, create a new Artist, 
     #else, return Artist
-
+    def print_songs(name)
+        Song.all.map {|my_song| my_song.artist.name == name}
+    end
     # def find_or_create_by_name(name)
     #     if (self.name.nil?)
     #     self.name = Artist.new(name)
