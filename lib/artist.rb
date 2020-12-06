@@ -1,3 +1,4 @@
+require 'pry'
 class Artist
     attr_accessor :name, :song#, :genre
 
@@ -12,11 +13,11 @@ class Artist
     def save # saves Artist instance in .all array
         @@all << self
     end
-
+    
     def self.all #calls all Artists in @@all
         @@all
     end
-
+    
     def songs #returns all Song instances that have that artist name
         Song.all.select {|name| name.artist == self}
     end
@@ -24,26 +25,22 @@ class Artist
     def add_song(song)
         song.artist = self
     end
-    
 #find or create AN ARTIST!!! by name
+#Either way, the return value of the method will be an 
+#instance of an artist with the name attribute filled out.
     def self.find_or_create_by_name(name) 
-        if  self.all.select {|artists| artists.name != name}
-            name = Artist.new(name)
+        the_artist = self.all.find {|artists| artists.name == name}   
+        if the_artist
+            return the_artist
         else
-            artists.name
-            #self.all.select {|artists| artists.name == name}
+            name = Artist.new(name)
         end
-    end #search through all Artists for matching names
+    end 
+    #search through all Artists for matching names
     #if that search is nil, create a new Artist, 
     #else, return Artist
-    def print_songs(name)
-        Song.all.map {|my_song| my_song.artist.name == name}
+    def print_songs
+      songs.each {|a_song| puts "#{a_song.name}"}
     end
-    # def find_or_create_by_name(name)
-    #     if (self.name.nil?)
-    #     self.name = Artist.new(name)
-    #     else
-    #         self.name = name
-    #     end
-    
+
 end
